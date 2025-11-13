@@ -24,7 +24,7 @@ stage('SonarQube Analysis') {
     steps {
         withSonarQubeEnv('SonarQube') {
             sh '''
-                sonar-scanner \
+                /opt/sonar-scanner/bin/sonar-scanner \
                 -Dsonar.projectKey=my-poc \
                 -Dsonar.sources=. \
                 -Dsonar.host.url=http://13.127.65.87:9000/
