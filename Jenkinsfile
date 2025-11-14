@@ -36,7 +36,12 @@ stage('SonarQube Analysis') {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t node-sample-app:latest .'
+                sh 'docker build -t node-sample-app:1411 .'
+            }
+        }
+        stage('Docker Run') {
+            steps {
+                sh 'docker run -d -p 3000:3000 node-sample-app:1411'
             }
         }
     }
