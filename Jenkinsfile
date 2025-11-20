@@ -36,10 +36,13 @@ pipeline {
             archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
 
             // Log Parser plugin step
-            logParser(
-                parseRules: '/home/ec2-user/log-parser-rules.txt', // Path to your rules file
-                unstableOnWarning: true,
-                failBuildOnError: true
+            
+logParser(
+    parsingRulesPath: '/home/ec2-user/log-parser-rules.txt', // Correct parameter name
+    unstableOnWarning: true,
+    failBuildOnError: true
+)
+
             )
         }
     }
