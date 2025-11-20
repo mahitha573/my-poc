@@ -30,19 +30,18 @@ pipeline {
             }
         }
     }
-    post {
+    
+post {
         always {
-            // Archive logs first (adjust path if needed)
             archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
-
-            // Log Parser plugin step
-            
-logParser(
-    parsingRulesPath: '/home/ec2-user/log-parser-rules.txt', // Correct parameter name
-    unstableOnWarning: true,
-    failBuildOnError: true
-
+            logParser(
+                useProjectRule: true,
+                projectRulePath: '/home/ec2-user/log-parser-rules.txt',
+                unstableOnWarning: true,
+                failBuildOnError: true
             )
         }
     }
+}
+
 }
