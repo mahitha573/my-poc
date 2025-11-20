@@ -34,9 +34,9 @@ pipeline {
         always {
             archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
             logParser(
-                parsingRulesPath: '/home/ec2-user/log-parser-rules.txt', // Global rules
+                parsingRulesPath: '/var/lib/jenkins/log-parser-rules.txt', // Global rules
                 useProjectRule: true,
-                projectRulePath: '/home/ec2-user/log-parser-rules.txt', // Project-specific rules
+                projectRulePath: '/var/lib/jenkins/log-parser-rules.txt', // Project-specific rules
                 unstableOnWarning: true,
                 failBuildOnError: true
             )
