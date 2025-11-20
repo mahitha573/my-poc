@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'NodeJS'  // Name configured in Jenkins
+        nodejs 'NodeJS'  // Ensure NodeJS plugin is installed and configured
     }
     stages {
         stage('Checkout') {
@@ -26,14 +26,16 @@ pipeline {
         }
         stage('Docker Run') {
             steps {
-                sh 'docker run -d -p 3000:3000 node-sample-app:1411'
+                sh 'docker run -d -p 3000:3000 node-sample-app:2011'
             }
         }
     }
-    
-post {
+    post {
         always {
+            // Archive logs (adjust pattern if needed)
             archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
+
+            // Log Parser plugin step
             logParser(
                 useProjectRule: true,
                 projectRulePath: '/home/ec2-user/log-parser-rules.txt',
@@ -42,6 +44,4 @@ post {
             )
         }
     }
-}
-
 }
