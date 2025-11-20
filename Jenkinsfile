@@ -19,30 +19,28 @@ pipeline {
                 sh 'npm test'
             }
         }
-        
-stage('SonarQube Analysis') {
-    steps {
-        withSonarQubeEnv('SonarQube') {
-            sh '''
-                /opt/sonar-scanner/bin/sonar-scanner \
-                -Dsonar.projectKey=my-poc \
-                -Dsonar.sources=. \
-                -Dsonar.host.url=http://13.127.65.87:9000/ \
-                -Dsonar.login=squ_984b3b2ca344b6a601c5b22a4391b8ea044e2dfb
-            '''
-        }
-    }
-}
-
         stage('Docker Build') {
             steps {
-                sh 'docker build -t node-sample-app:1411 .'
+                sh 'docker build -t node-sample-app:2011 .'
             }
         }
         stage('Docker Run') {
             steps {
                 sh 'docker run -d -p 3000:3000 node-sample-app:1411'
             }
+        }
+    }
+    post {
+        always {
+            // Archive logs first (adjust path if needed)
+            archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
+
+            // Log Parser plugin step
+            logParser(
+                parseRules: '/home/ec2-user/log-parser-rules.txt', // Path to your rules file
+                unstableOnWarning: true,
+                failBuildOnError: true
+            )
         }
     }
 }
