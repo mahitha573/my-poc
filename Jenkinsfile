@@ -41,7 +41,6 @@ logParser(
     parsingRulesPath: '/home/ec2-user/log-parser-rules.txt', // Correct parameter name
     unstableOnWarning: true,
     failBuildOnError: true
-)
 
             )
         }
