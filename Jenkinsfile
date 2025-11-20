@@ -32,13 +32,11 @@ pipeline {
     }
     post {
         always {
-            // Archive logs (adjust pattern if needed)
             archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
-
-            // Log Parser plugin step
             logParser(
+                parsingRulesPath: '/home/ec2-user/log-parser-rules.txt', // Global rules
                 useProjectRule: true,
-                projectRulePath: '/home/ec2-user/log-parser-rules.txt',
+                projectRulePath: '/home/ec2-user/log-parser-rules.txt', // Project-specific rules
                 unstableOnWarning: true,
                 failBuildOnError: true
             )
